@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 const Header = () => {
     return (
         <div className="shadow-md">
-            <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-4">
-                <div className="flex items-center">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-8 py-4">
+                <Link to="/" className="flex items-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="100"
@@ -15,9 +17,9 @@ const Header = () => {
                         />
                     </svg>
 
-                </div>
+                </Link>
 
-                <div className="flex items-center rounded-full border border-gray-300 px-4 py-2 pl-6 shadow-md">
+                <Link to="/" className="hidden lg:flex items-center rounded-full border border-gray-300 px-4 py-2 pl-6 shadow-md">
                     <p className="border-r border-r-gray-300 pr-4">Qualquer lugar</p>
                     <p className="border-r border-r-gray-300 px-4">Qualquer Semana</p>
                     <p className="px-4">Hóspedes</p>
@@ -37,9 +39,9 @@ const Header = () => {
                             />
                         </svg>
                     </div>
-                </div>
+                </Link>
 
-                <div className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 pl-6 shadow-md">
+                <Link to="/login" className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 pl-6 shadow-md">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -66,8 +68,8 @@ const Header = () => {
                         />
                     </svg>
 
-                    <p>Alex Bruno</p>
-                </div>
+                    <p className="sm:max-w-32 max-w-20 truncate">Alex Bruno</p>
+                </Link>
             </div>
         </div>
     );
