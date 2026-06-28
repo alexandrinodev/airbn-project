@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ user }) => {
+
+    console.log(user)
     return (
         <div className="shadow-md">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-8 py-4">
@@ -67,8 +69,8 @@ const Header = () => {
                             clipRule="evenodd"
                         />
                     </svg>
+                    {user ? <p className="sm:max-w-32 max-w-20 truncate">{user.name}</p> : <></>}
 
-                    <p className="sm:max-w-32 max-w-20 truncate">Alex Bruno</p>
                 </Link>
             </div>
         </div>
