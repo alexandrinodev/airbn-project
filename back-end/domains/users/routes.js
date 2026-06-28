@@ -2,9 +2,12 @@ import { Router } from "express";
 import { connectDB } from "../../config/db.js";
 import User from "./model.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 const router = Router();
 const bcryptSalt = bcrypt.genSaltSync();
+const { JWT_SECRET_KEY } = process.env;
 
 router.post("/", async (req, res) => {
     await connectDB();
@@ -35,8 +38,23 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get("/profile", async (req, res) => {
+    const { token } = req.cookies;
+
+    if (token) {
+        try {
+            const userInfo = jwt.verify(token, JWT_SECRET_KEY);
+            return res.json(userInfo);
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    }
+
+    return res.json(null);
+});
+
 router.post("/login", async (req, res) => {
-    connectDB();
+    await connectDB();
 
     const { email, password } = req.body;
 
@@ -44,17 +62,25 @@ router.post("/login", async (req, res) => {
         const userDoc = await User.findOne({ email });
 
         if (!userDoc) {
-            res.status(401).json("Usuario nao encontrado");
+            return res.status(401).json("Usuario nao encontrado");
         }
 
         const { name, _id } = userDoc;
         const passwordCorrect = bcrypt.compareSync(password, userDoc.password);
 
-        passwordCorrect
-            ? res.status(200).json({ _id, name })
-            : res.status(400).json("Senha inválida");
+        if (!passwordCorrect) {
+            return res.status(400).json("Senha inválida");
+        }
+
+        const newUserObj = { _id, name, email };
+        const token = jwt.sign(newUserObj, JWT_SECRET_KEY);
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            sameSite: "lax",
+        }).json(newUserObj);
     } catch (error) {
-        res.status(500).json(error);
+        return res.status(500).json(error);
     }
 });
 
