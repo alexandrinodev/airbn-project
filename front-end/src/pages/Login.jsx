@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-export const Login = ({ setUser }) => {
+export const Login = ({ user, setUser }) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -28,7 +28,7 @@ export const Login = ({ setUser }) => {
         }
     }
 
-    if (redirect) return <Navigate to='/' />
+    if (redirect || user) return <Navigate to='/' />
 
     return (
         <section className="flex items-center">
