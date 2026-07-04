@@ -11,21 +11,21 @@ export const Register = ({ setUser }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // if (!email && !password) {
-        //     alert("Preencha usario e senha")
-        // }
+        if (!email && !password && name) {
+            alert("Preencha nome, email e senha")
+        }
 
-        // try {
-        //     const { data: userDoc } = await axios.post('/users/login', {
-        //         email,
-        //         password
-        //     })
-        //     setUser(userDoc)
-        //     setRedirect(true)
-
-        // } catch (error) {
-        //     alert(error.response.data)
-        // }
+        try {
+            const { data: userDoc } = await axios.post('/users', {
+                name,
+                email,
+                password
+            })
+            setUser(userDoc)
+            setRedirect(true)
+        } catch (error) {
+            alert(error.response.data)
+        }
     }
 
     if (redirect) return <Navigate to='/' />

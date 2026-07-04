@@ -20,7 +20,15 @@ router.post("/", async (req, res) => {
             password: encryptedPassword,
         });
 
-        res.status(201).json({ newUserDoc });
+        const { _id } = newUserDoc;
+        const newUserObj = { name, email, _id };
+
+        const token = jwt.sign(newUserObj, JWT_SECRET_KEY);
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            sameSite: "lax",
+        }).json(newUserObj);
     } catch (e) {
         console.error(e);
         res.status(500).json({ ok: false, error: String(e?.message || e) });
