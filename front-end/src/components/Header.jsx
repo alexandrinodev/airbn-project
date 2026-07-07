@@ -43,7 +43,7 @@ const Header = ({ user }) => {
                     </div>
                 </Link>
 
-                <Link to="/login" className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 pl-6 shadow-md">
+                <Link to={user ? "/account/perfil" : "/login"} className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 pl-6 shadow-md">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
