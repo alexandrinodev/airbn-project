@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useUserContext } from '../contexts/UserContext'
 
-const AccProfile = ({ user }) => {
-
+const AccProfile = () => {
+    const { user, setUser } = useUserContext()
     const [redirect, setRedirect] = useState(false)
 
 
@@ -11,6 +12,7 @@ const AccProfile = ({ user }) => {
         try {
             const { data } = await axios.post("/users/logout")
             console.log(data)
+            setUser(null)
 
             setRedirect(true)
         } catch (error) {

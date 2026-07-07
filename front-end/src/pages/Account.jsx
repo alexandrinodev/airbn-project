@@ -2,7 +2,7 @@ import AccProfile from '../components/AccProfile';
 import { Button } from '../components/Button';
 import { Link, useParams } from 'react-router-dom'
 
-const Account = ({ user }) => {
+const Account = () => {
     const { subpage } = useParams()
     return (
         <section className="p-8">
@@ -21,7 +21,7 @@ const Account = ({ user }) => {
                     </Link>
                 </div>
 
-                {subpage === 'perfil' && <AccProfile user={user} />}
+                {subpage === 'perfil' && <AccProfile />}
 
             </div>
         </section>
